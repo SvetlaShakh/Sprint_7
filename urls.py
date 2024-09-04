@@ -1,0 +1,7 @@
+BASE_URL = 'https://qa-scooter.praktikum-services.ru/api/v1'
+COURIER = '/courier'
+LOGIN_COURIER = '/courier/login'
+ORDER = '/orders'
+ORDER_ACCEPT = '/orders/accept/'
+ORDER_TRACK = '/orders/track'
+ORDER_CANCEL = '/orders/cancel'
