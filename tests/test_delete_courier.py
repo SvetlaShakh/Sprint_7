@@ -1,5 +1,6 @@
 import allure
 from api_scooter import ScooterApi
+import data_scooter
 
 
 class TestDeleteCourier:
@@ -14,7 +15,7 @@ class TestDeleteCourier:
         body = {'id': response.json()['id']}
         response_del = ScooterApi.delete_courier(courier_id, body)
         assert response_del.status_code == 200
-        assert response_del.json() == {'ok': True}
+        assert response_del.json() == data_scooter.response_text_delete_courier_200
 
     @allure.title('Проверка удаления курьера без указания id курьера в querty параметре - код ответа 400')
     @allure.description('При отправке запроса без указания id курьера в querty параметре и '
@@ -27,7 +28,7 @@ class TestDeleteCourier:
         body = {'id': response.json()['id']}
         response_del = ScooterApi.delete_courier(courier_id, body)
         assert response_del.status_code == 400
-        assert response_del.json()['message'] == 'Недостаточно данных для удаления курьера'
+        assert response_del.json()['message'] == data_scooter.response_text_delete_courier_400
 
     @allure.title('Проверка удаления курьера без указания id курьера в теле запроса - код ответа 400')
     @allure.description('При отправке запроса с указанием id курьера в querty параметре и '
@@ -40,7 +41,7 @@ class TestDeleteCourier:
         body = {}
         response_del = ScooterApi.delete_courier(courier_id, body)
         assert response_del.status_code == 400
-        assert response_del.json()['message'] == 'Недостаточно данных для удаления курьера'
+        assert response_del.json()['message'] == data_scooter.response_text_delete_courier_400
 
     @allure.title('Проверка удаления курьера с несуществующим id курьера - код ответа 404')
     @allure.description('При отправке запроса с указанием  несуществуещего id курьера в querty параметре и '
@@ -53,4 +54,4 @@ class TestDeleteCourier:
         body = {'id': '000'}
         response_del = ScooterApi.delete_courier(courier_id, body)
         assert response_del.status_code == 404
-        assert response_del.json()['message'] == 'Курьера с таким id нет'
+        assert response_del.json()['message'] == data_scooter.response_text_delete_courier_404

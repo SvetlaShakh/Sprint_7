@@ -2,6 +2,7 @@ import allure
 import pytest
 from api_scooter import ScooterApi
 import helpers
+import data_scooter
 
 
 class TestLoginCourier:
@@ -26,7 +27,7 @@ class TestLoginCourier:
         response = ScooterApi.login_courier(login_body)
         helpers.del_created_courier(create_courier)
         assert response.status_code == 400
-        assert response.json()['message'] == 'Недостаточно данных для входа'
+        assert response.json()['message'] == data_scooter.response_text_login_courier_400
 
     @allure.title('Проверка входа курьера в систему с указанием несуществующего login - код ответа 404')
     @allure.description('При отправке запроса с указанием несуществующего login в теле запроса на ручку POST'
@@ -35,4 +36,4 @@ class TestLoginCourier:
         body = helpers.generate_registration_body_two_parameters('login', 'password', 7)
         response = ScooterApi.login_courier(body)
         assert response.status_code == 404
-        assert response.json()['message'] == 'Учетная запись не найдена'
+        assert response.json()['message'] == data_scooter.response_text_login_courier_404

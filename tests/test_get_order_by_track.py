@@ -26,7 +26,7 @@ class TestGetOrderByTrack:
         query = ''
         response = ScooterApi.order_track(query)
         assert response.status_code == 400
-        assert response.json()['message'] == 'Недостаточно данных для поиска'
+        assert response.json()['message'] == data_scooter.response_text_get_order_by_track_400
 
     @allure.title('Проверка получения заказа с указанием несуществующнго track номера - код ответа 404')
     @allure.description('При отправке запроса с указанием несуществующего track номера в query параметре на ручку '
@@ -35,4 +35,4 @@ class TestGetOrderByTrack:
         query = f'?t=0000'
         response = ScooterApi.order_track(query)
         assert response.status_code == 404
-        assert response.json()['message'] == 'Заказ не найден'
+        assert response.json()['message'] == data_scooter.response_text_get_order_by_track_404

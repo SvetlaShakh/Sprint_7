@@ -20,7 +20,7 @@ class TestAcceptOrder:
         helpers.del_login_courier(response_courier)
         helpers.cansel_order(response_order)
         assert response.status_code == 200
-        assert response.json() == {'ok': True}
+        assert response.json() == data_scooter.response_text_assept_order_200
 
     @allure.title('Проверка запроса принятия заказа без указания id курьера - код ответа 400')
     @allure.description('При отправке запроса без указания id курьера и с существующим track номером заказа на ручку '
@@ -33,7 +33,7 @@ class TestAcceptOrder:
         response = ScooterApi.order_accept(query)
         helpers.cansel_order(response_order)
         assert response.status_code == 400
-        assert response.json()['message'] == 'Недостаточно данных для поиска'
+        assert response.json()['message'] == data_scooter.response_text_assept_order_400
 
     @allure.title('Проверка запроса принятия заказа без указания track номера заказа - код ответа 400')
     @allure.description('При отправке запроса с существующим id курьера и без указания track номера заказа на ручку '
@@ -47,7 +47,7 @@ class TestAcceptOrder:
         response = ScooterApi.order_accept(query)
         helpers.del_login_courier(response_courier)
         assert response.status_code == 400
-        assert response.json()['message'] == 'Недостаточно данных для поиска'
+        assert response.json()['message'] == data_scooter.response_text_assept_order_400
 
     @allure.title('Проверка запроса принятия заказа с несуществующим track номером заказа - код ответа 404')
     @allure.description('При отправке запроса с существующим id курьера и несуществующим track номером заказа на ручку '
@@ -62,7 +62,7 @@ class TestAcceptOrder:
         response = ScooterApi.order_accept(query)
         helpers.del_login_courier(response_courier)
         assert response.status_code == 404
-        assert response.json()['message'] == 'Заказа с таким id не существует'
+        assert response.json()['message'] == data_scooter.response_text_assept_order_404_track_order
 
     @allure.title('Проверка запроса принятия заказа с несуществующим id курьера - код ответа 404')
     @allure.description('При отправке запроса с несуществующим id курьера и существующим track номером заказа на ручку '
@@ -76,4 +76,4 @@ class TestAcceptOrder:
         response = ScooterApi.order_accept(query)
         helpers.cansel_order(response_order)
         assert response.status_code == 404
-        assert response.json()['message'] == 'Курьера с таким id не существует'
+        assert response.json()['message'] == data_scooter.response_text_assept_order_404_id_courier

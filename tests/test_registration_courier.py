@@ -15,7 +15,7 @@ class TestRegistrationCourier:
         response = ScooterApi.registration_courier(registration_body)
         helpers.del_created_courier(registration_body)
         assert response.status_code == 201
-        assert response.json() == {'ok': True}
+        assert response.json() == data_scooter.response_text_registration_courier_201
 
     @allure.title('Проверка создания курьера без передачи одного из параметров '
                   'login, password, first_name - код ответа 400')
@@ -29,7 +29,7 @@ class TestRegistrationCourier:
         if response.status_code == 201:
             helpers.del_created_courier(registration_body)
         assert response.status_code == 400
-        assert response.json()['message'] == 'Недостаточно данных для создания учетной записи'
+        assert response.json()['message'] == data_scooter.response_text_registration_courier_400
 
     @allure.title('Проверка повторного создания курьера с теми же данными - код ответа 409')
     @allure.description('При отправке запроса с указанием данных ранее зарегестированного курьера '
@@ -41,4 +41,4 @@ class TestRegistrationCourier:
         response = ScooterApi.registration_courier(registration_body)
         helpers.del_created_courier(registration_body)
         assert response.status_code == 409
-        assert response.json()['message'] == 'Этот логин уже используется'
+        assert response.json()['message'] == data_scooter.response_text_registration_courier_409
